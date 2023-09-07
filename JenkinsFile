@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    environment{
+        DIRECTORY_PATH = '/Users/ravishankar/Library/CloudStorage/OneDrive-DeakinUniversity/Deakin/SIT753/Week_5/'
+        TESTING_ENVIRONMENT = 'Test_Env'
+        PRODUCTION_ENVIRONMENT = 'Prod_Env'
+    }
+    stages{
+        stage('Build'){
+            steps{
+                echo "Building..."
+            }
+        }
+        
+        stage('Test'){
+            steps{
+                echo "Testing..."
+            }
+        }
+        
+        stage('CodeQualityCheck'){
+            steps{
+                echo "Code Quality Check"
+            }
+        }
+        
+        stage('Deploy'){
+            steps{
+                echo "Deploy Successful"
+            }
+        }
+        
+        stage('Approval'){
+            steps{
+                echo "Approval Pending"
+                sleep 10
+            }
+        }
+        
+        stage('DeployToProduction'){
+            steps{
+                echo "Deploying To Production"
+            }
+        }
+    }
+}
