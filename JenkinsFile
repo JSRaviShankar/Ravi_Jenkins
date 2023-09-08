@@ -6,45 +6,55 @@ pipeline {
         PRODUCTION_ENVIRONMENT = 'Prod_Env'
     }
     stages{
-        stage('Build'){
+        stage('Maven Build'){
             steps{
-                echo "Building..."
+                echo "Building using Maven..."
             }
         }
         
-        stage('Test'){
+        stage('Unit and Integration Testing'){
             steps{
-                echo "Testing..."
+                echo "Unit and Integration Tests using JUnit"
+                emailext (
+                subject: "Jenkins Build No:${env.BUILD_NUMBER} - Unit and Integration Testing Stage",
+                body: "The Testing stage of build ${env.BUILD_NUMBER} has been completed with SUCCESS status.",
+                to: 's223296806@deakin.edu.au',
+                attachLog: true)
             }
         }
         
-        stage('CodeQualityCheck'){
+        stage('Code Analysis'){
             steps{
-                echo "Code Quality Check"
+                echo "Code Analysis using PMD Tool"
             }
         }
         
-        stage('Deploy'){
+        stage('Security Scan'){
             steps{
-                echo "Deploy Successful"
+                echo "Security Scan using Veracode"
+                emailext (
+                subject: "Jenkins Build No:${env.BUILD_NUMBER} - Security Scan Stage",
+                body: "The Security Scan stage of build ${env.BUILD_NUMBER} has been completed with SUCCESS status.",
+                to: 's223296806@deakin.edu.au',
+                attachLog: true)
             }
         }
         
-        stage('Approval'){
+        stage('Deploy to Staging Environment'){
             steps{
-                echo "Approval Pending"
-                sleep 10
+                echo "Deploying to Staging Environment..."
+            }
+        }
+
+        stage('Integration Tests on Staging'){
+            steps{
+                echo "Starting Integration Tests on Staging Environment..."
             }
         }
         
-        stage('DeployToProduction'){
+        stage('Deploy To Production'){
             steps{
                 echo "Deploying To Production"
-            }
-        }
-        stage('Complete'){
-            steps{
-                echo "Completed"
             }
         }
     }
